@@ -15,15 +15,6 @@
 #ifndef SIFT_FAST_H
 #define SIFT_FAST_H
 
-#define SIFTFAST_VERSION_MAJOR @SIFTFAST_VERSION_MAJOR@
-#define SIFTFAST_VERSION_MINOR @SIFTFAST_VERSION_MINOR@
-#define SIFTFAST_VERSION_PATCH @SIFTFAST_VERSION_PATCH@
-#define SIFTFAST_VERSION_COMBINED(major, minor, patch) (((major) << 16) | ((minor) << 8) | (patch))
-#define SIFTFAST_VERSION SIFTFAST_VERSION_COMBINED(SIFTFAST_VERSION_MAJOR, SIFTFAST_VERSION_MINOR, SIFTFAST_VERSION_PATCH)
-
-#define SIFTFAST_VERSION_GE(major1, minor1, patch1, major2, minor2, patch2) (SIFTFAST_VERSION_COMBINED(major1, minor1, patch1) >= SIFTFAST_VERSION_COMBINED(major2, minor2, patch2))
-#define SIFTFAST_VERSION_MINIMUM(major, minor, patch) SIFTFAST_VERSION_GE(SIFTFAST_VERSION_MAJOR, SIFTFAST_VERSION_MINOR, SIFTFAST_VERSION_PATCH, major, minor, patch)
-
 typedef struct ImageSt {
     int rows, cols;          // Dimensions of image.
     float *pixels;          // 2D array of image pixels.
