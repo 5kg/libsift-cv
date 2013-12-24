@@ -15,14 +15,7 @@
 #ifndef SIFT_FAST_H
 #define SIFT_FAST_H
 
-#define SIFTFAST_VERSION_MAJOR 1
-#define SIFTFAST_VERSION_MINOR 3
-#define SIFTFAST_VERSION_PATCH 0
-#define SIFTFAST_VERSION_COMBINED(major, minor, patch) (((major) << 16) | ((minor) << 8) | (patch))
-#define SIFTFAST_VERSION SIFTFAST_VERSION_COMBINED(SIFTFAST_VERSION_MAJOR, SIFTFAST_VERSION_MINOR, SIFTFAST_VERSION_PATCH)
-
-#define SIFTFAST_VERSION_GE(major1, minor1, patch1, major2, minor2, patch2) (SIFTFAST_VERSION_COMBINED(major1, minor1, patch1) >= SIFTFAST_VERSION_COMBINED(major2, minor2, patch2))
-#define SIFTFAST_VERSION_MINIMUM(major, minor, patch) SIFTFAST_VERSION_GE(SIFTFAST_VERSION_MAJOR, SIFTFAST_VERSION_MINOR, SIFTFAST_VERSION_PATCH, major, minor, patch)
+#include <cv.h>
 
 typedef struct ImageSt {
     int rows, cols;          // Dimensions of image.
@@ -36,33 +29,20 @@ typedef struct KeypointSt {
     float scale, ori;           // Scale and orientation (range [-PI,PI])
     float descrip[128];     // Vector of descriptor values
     struct KeypointSt *next;    // Pointer to next keypoint in list.
-    // used for extracting descriptors, not part of the the keypoint's frame
-    int imageindex; /// index of image keypoint came from
-    float fpyramidscale; // scale of the pyramid
 } *Keypoint;
-
-struct SiftParameters
-{
-    int DoubleImSize;
-    int Scales;
-    float InitSigma;
-    float PeakThresh; // default: 0.04/Scales
-};
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 Keypoint GetKeypoints(Image porgimage);
-Keypoint GetKeypointFrames(Image porgimage);
-void GetKeypointDescriptors(Image porgimage, Keypoint frames);
 Image CreateImage(int rows, int cols);
 Image CreateImageFromMatlabData(double* pdata, int rows, int cols);
+Image CreateImageFromOpenCVMat(cv::Mat M);
 void DestroyAllImages();
 void DestroyAllResources();
 void FreeKeypoints(Keypoint keypt);
-void SetSiftParameters(SiftParameters params);
-SiftParameters GetSiftParameters();
+
 #ifdef __cplusplus
 }
 #endif
